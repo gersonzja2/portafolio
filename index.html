@@ -7,7 +7,60 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="sobre-mi">
+            <h1>Hola, soy Gerson Zambrana</h1>
+            <h2>Desarrollador de Software</h2>
+            <img src="assets/images/perfil.png" alt="Foto de Perfil">
+            <p>Bienvenido a mi portafolio. Me apasiona crear soluciones web...</p>
+        </section>
+
+        <section id="proyectos">
+            <h2>Mis Proyectos</h2>
+            <div class="proyecto">
+                <h3>Nombre del Proyecto</h3>
+                <p>Descripción breve de lo que hace el proyecto.</p>
+            </div>
+        </section>
+
+        <section id="habilidades">
+            <h2>Habilidades</h2>
+            <ul class="lista-habilidades">
+                <li>HTML5</li>
+                <li>CSS3</li>
+                <li>JavaScript</li>
+                <li>Git & GitHub</li>
+                <li>Responsive Design</li>
+            </ul>
+        </section>
+
+        <section id="contacto">
+            <h2>Contacto</h2>
+            <p>¿Te interesa trabajar conmigo? Envíame un mensaje.</p>
+            <form class="formulario-contacto">
+                <input type="text" placeholder="Tu Nombre" required>
+                <input type="email" placeholder="Tu Email" required>
+                <textarea placeholder="Escribe tu mensaje aquí..." rows="5" required></textarea>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mi Portafolio</p>
+    </footer>
+
     <script src="js/script.js"></script>
 </body>
 </html>
