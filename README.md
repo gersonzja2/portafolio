@@ -27,4 +27,4 @@ Este proyecto requiere Python para la funcionalidad del formulario de contacto.
 4. Abre el archivo `index.html` en tu navegador web preferido.
 
 ---
-&copy; 2025 Gerson Zambrana
+&copy; 2024 Gerson Zambrana

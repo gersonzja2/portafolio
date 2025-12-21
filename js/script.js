@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.querySelector('.formulario-contacto');
     
     if (formulario) {
+        const estadoMensaje = document.getElementById('estado-mensaje');
+
         formulario.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -49,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 email: document.getElementById('email').value,
                 mensaje: document.getElementById('mensaje').value
             };
+            
+            // Limpiar estado previo
+            if (estadoMensaje) estadoMensaje.style.display = 'none';
 
             try {
                 const respuesta = await fetch('http://127.0.0.1:8000/api/contacto', {
@@ -58,14 +63,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (respuesta.ok) {
-                    alert('¡Mensaje enviado con éxito!');
+                    if (estadoMensaje) {
+                        estadoMensaje.textContent = '¡Mensaje enviado con éxito!';
+                        estadoMensaje.style.color = '#28a745'; // Verde
+                        estadoMensaje.style.display = 'block';
+                    } else {
+                        alert('¡Mensaje enviado con éxito!');
+                    }
                     formulario.reset();
                 } else {
-                    alert('Hubo un error al enviar el mensaje.');
+                    throw new Error('Error en el envío');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error de conexión con el servidor.');
+                if (estadoMensaje) {
+                    estadoMensaje.textContent = 'Hubo un error al enviar el mensaje.';
+                    estadoMensaje.style.color = '#dc3545'; // Rojo
+                    estadoMensaje.style.display = 'block';
+                } else {
+                    alert('Error de conexión con el servidor.');
+                }
             }
         });
     }
