@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (formulario) {
         const estadoMensaje = document.getElementById('estado-mensaje');
+        const botonEnviar = formulario.querySelector('button[type="submit"]');
 
         formulario.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -53,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             
             // Limpiar estado previo
+            const textoOriginalBoton = botonEnviar.textContent;
+            botonEnviar.disabled = true;
+            botonEnviar.textContent = 'Enviando...';
             if (estadoMensaje) estadoMensaje.style.display = 'none';
 
             try {
@@ -63,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (respuesta.ok) {
+                    formulario.reset();
                     if (estadoMensaje) {
                         estadoMensaje.textContent = '¡Mensaje enviado con éxito!';
                         estadoMensaje.style.color = '#28a745'; // Verde
@@ -70,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         alert('¡Mensaje enviado con éxito!');
                     }
-                    formulario.reset();
                 } else {
                     throw new Error('Error en el envío');
                 }
@@ -83,6 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     alert('Error de conexión con el servidor.');
                 }
+            } finally {
+                // Restaurar el estado del botón
+                botonEnviar.disabled = false;
+                botonEnviar.textContent = textoOriginalBoton;
+
+                // Ocultar el mensaje de estado después de 5 segundos
+                setTimeout(() => {
+                    if (estadoMensaje) estadoMensaje.style.display = 'none';
+                }, 5000);
             }
         });
     }
