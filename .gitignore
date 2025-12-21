@@ -1,0 +1,17 @@
+# Dependencias (futuras)
+node_modules/
+venv/
+.venv/
+
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Configuraciones de Editor
+.vscode/
+.idea/
+*.swp
+*.swo
