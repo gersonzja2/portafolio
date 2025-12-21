@@ -22,7 +22,7 @@ Bienvenido a mi portafolio personal. Este sitio web ha sido diseñado para prese
 Este proyecto requiere Python para la funcionalidad del formulario de contacto.
 
 1. Clona el repositorio o descarga los archivos.
-2. Instala las dependencias: `pip install fastapi uvicorn`.
+2. Instala las dependencias: `pip install fastapi uvicorn sqlmodel`.
 3. Inicia el servidor: `python -m uvicorn main:app --reload`.
 4. Abre el archivo `index.html` en tu navegador web preferido.
 
