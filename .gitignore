@@ -1,17 +1,23 @@
-# Dependencias (futuras)
-node_modules/
+# Entornos virtuales de Python
 venv/
+env/
 .venv/
+.env/
 
-# Archivos del Sistema Operativo
-.DS_Store
-Thumbs.db
+# Archivos de caché y compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Logs
-*.log
-
-# Configuraciones de Editor
+# Archivos de configuración de editores
 .vscode/
 .idea/
-*.swp
-*.swo
+
+# Archivos de entorno (para guardar secretos)
+.env
+
+# Registros y bases de datos temporales
+*.log
+*.db
+*.sqlite3

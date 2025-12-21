@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
+    <meta name="description" content="Portafolio personal de Gerson Zambrana, Desarrollador de Software especializado en soluciones web.">
+    <meta name="keywords" content="desarrollador, software, web, portafolio, python, javascript, gerson zambrana">
+    <title>Portafolio | Gerson Zambrana</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -22,7 +24,7 @@
         <section id="sobre-mi">
             <h1>Hola, soy Gerson Zambrana</h1>
             <h2>Desarrollador de Software</h2>
-            <img src="assets/images/perfil.png" alt="Foto de Perfil">
+            <img src="assets/images/perfil.png" alt="Foto de perfil de Gerson Zambrana">
             <p>Bienvenido a mi portafolio. Me apasiona crear soluciones web...</p>
         </section>
 
@@ -49,16 +51,22 @@
             <h2>Contacto</h2>
             <p>¿Te interesa trabajar conmigo? Envíame un mensaje.</p>
             <form class="formulario-contacto">
-                <input type="text" placeholder="Tu Nombre" required>
-                <input type="email" placeholder="Tu Email" required>
-                <textarea placeholder="Escribe tu mensaje aquí..." rows="5" required></textarea>
+                <label for="nombre" class="sr-only">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu Nombre" required>
+                
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                
+                <label for="mensaje" class="sr-only">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." rows="5" required></textarea>
+                
                 <button type="submit">Enviar Mensaje</button>
             </form>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Mi Portafolio</p>
+        <p>&copy; 2025 Gerson Zambrana</p>
     </footer>
 
     <script src="js/script.js"></script>
