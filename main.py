@@ -2,9 +2,9 @@ import os
 from typing import Optional
 from contextlib import asynccontextmanager
 from datetime import datetime
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlmodel import Field, Session, SQLModel, create_engine
+from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 # 1. Definir el modelo de la base de datos con SQLModel
 # SQLModel combina Pydantic y SQLAlchemy. 'table=True' lo convierte en una tabla de base de datos.
@@ -47,7 +47,7 @@ app.add_middleware(
 
 # 5. Actualizar el endpoint para que guarde en la base de datos
 @app.post("/api/contacto")
-async def recibir_contacto(contacto: Contacto):
+def recibir_contacto(contacto: Contacto):
     with Session(engine) as session:
         session.add(contacto)
         session.commit()
@@ -55,3 +55,47 @@ async def recibir_contacto(contacto: Contacto):
 
     print(f"Guardado en DB: {contacto}")
     return {"mensaje": "Mensaje recibido y guardado exitosamente"}
+
+# 6. Leer todos los contactos (Read All)
+@app.get("/api/contactos", response_model=list[Contacto])
+def leer_contactos():
+    with Session(engine) as session:
+        contactos = session.exec(select(Contacto)).all()
+        return contactos
+
+# 7. Leer un contacto por ID (Read One)
+@app.get("/api/contacto/{contacto_id}", response_model=Contacto)
+def leer_contacto(contacto_id: int):
+    with Session(engine) as session:
+        contacto = session.get(Contacto, contacto_id)
+        if not contacto:
+            raise HTTPException(status_code=404, detail="Contacto no encontrado")
+        return contacto
+
+# 8. Actualizar un contacto (Update)
+@app.put("/api/contacto/{contacto_id}", response_model=Contacto)
+def actualizar_contacto(contacto_id: int, contacto_actualizado: Contacto):
+    with Session(engine) as session:
+        contacto_db = session.get(Contacto, contacto_id)
+        if not contacto_db:
+            raise HTTPException(status_code=404, detail="Contacto no encontrado")
+        
+        contacto_db.nombre = contacto_actualizado.nombre
+        contacto_db.email = contacto_actualizado.email
+        contacto_db.mensaje = contacto_actualizado.mensaje
+        
+        session.add(contacto_db)
+        session.commit()
+        session.refresh(contacto_db)
+        return contacto_db
+
+# 9. Eliminar un contacto (Delete)
+@app.delete("/api/contacto/{contacto_id}")
+def eliminar_contacto(contacto_id: int):
+    with Session(engine) as session:
+        contacto = session.get(Contacto, contacto_id)
+        if not contacto:
+            raise HTTPException(status_code=404, detail="Contacto no encontrado")
+        session.delete(contacto)
+        session.commit()
+        return {"mensaje": "Contacto eliminado exitosamente"}
