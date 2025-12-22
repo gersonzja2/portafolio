@@ -77,8 +77,12 @@ def enviar_correo_respuesta(email_destino: str, nombre: str):
         cuerpo = f"Hola {nombre},\n\nGracias por visitar mi portafolio. He recibido tu mensaje correctamente y te responderé a la brevedad.\n\nSaludos."
         msg.attach(MIMEText(cuerpo, 'plain'))
 
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
+        if SMTP_PORT == 465:
+            server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
+        else:
+            server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+            server.starttls()
+            
         server.login(SMTP_USERNAME, SMTP_PASSWORD)
         server.send_message(msg)
         server.quit()
