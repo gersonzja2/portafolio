@@ -1,5 +1,7 @@
 const API_URL = 'https://portafolio-backend-6efq.onrender.com'; // Cambiar por tu URL de Render al desplegar
 
+alert("¡Script cargado! Si ves esto, el archivo JS está funcionando.");
+
 // 1. Log global para confirmar que el archivo JS se cargó (Evitar problemas de caché)
 console.log("✅ script.js cargado correctamente. API:", API_URL);
 
