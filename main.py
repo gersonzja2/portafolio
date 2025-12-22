@@ -53,7 +53,7 @@ engine = create_engine(sqlite_url, echo=True)
 
 # Configuración de Email (SMTP)
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_PORT = int(os.getenv("SMTP_PORT", "465"))
 SMTP_USERNAME = os.getenv("SMTP_USERNAME")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
@@ -64,6 +64,7 @@ if not SMTP_USERNAME or not SMTP_PASSWORD:
 
 def enviar_correo_respuesta(email_destino: str, nombre: str):
     """Envía un correo de confirmación en segundo plano."""
+    print(f"📧 Iniciando intento de envío de correo a {email_destino}...")
     if not SMTP_USERNAME or not SMTP_PASSWORD:
         print("⚠️ Credenciales SMTP no configuradas. No se envió el correo.")
         return
