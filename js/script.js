@@ -1,3 +1,5 @@
+const API_URL = 'http://127.0.0.1:8000'; // Cambiar por tu URL de Render al desplegar
+
 document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.querySelector('.formulario-contacto');
     const estadoMensaje = document.getElementById('estado-mensaje');
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 // 3. Enviar los datos al backend (API)
                 // Nota: Asegúrate de que tu servidor (uvicorn) esté corriendo en el puerto 8000
-                const respuesta = await fetch('http://127.0.0.1:8000/api/contacto', {
+                const respuesta = await fetch(`${API_URL}/api/contacto`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
