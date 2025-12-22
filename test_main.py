@@ -47,7 +47,7 @@ def client_fixture(session: Session):
 # 4. Prueba: Crear un contacto (POST)
 def test_crear_contacto(client: TestClient, monkeypatch):
     # Mockear (simular) el envío de correo para que no intente enviar uno real
-    monkeypatch.setattr("main.enviar_correo_respuesta", lambda *args: None)
+    monkeypatch.setattr("main.enviar_notificacion_admin", lambda *args: None)
 
     payload = {
         "nombre": "Usuario Test",
@@ -73,7 +73,7 @@ def test_leer_contactos(client: TestClient):
 # 6. Prueba: Actualizar un contacto (PUT)
 def test_actualizar_contacto(client: TestClient, monkeypatch):
     # 1. Crear un contacto primero para tener algo que editar
-    monkeypatch.setattr("main.enviar_correo_respuesta", lambda *args: None)
+    monkeypatch.setattr("main.enviar_notificacion_admin", lambda *args: None)
     res_crear = client.post("/api/contacto", json={
         "nombre": "Original", "email": "orig@test.com", "mensaje": "Original"
     })
@@ -89,7 +89,7 @@ def test_actualizar_contacto(client: TestClient, monkeypatch):
 # 7. Prueba: Eliminar un contacto (DELETE)
 def test_eliminar_contacto(client: TestClient, monkeypatch):
     # 1. Crear un contacto primero
-    monkeypatch.setattr("main.enviar_correo_respuesta", lambda *args: None)
+    monkeypatch.setattr("main.enviar_notificacion_admin", lambda *args: None)
     res_crear = client.post("/api/contacto", json={
         "nombre": "Borrar", "email": "borrar@test.com", "mensaje": "Adios"
     })

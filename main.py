@@ -1,5 +1,6 @@
 import os
 import socket
+import httpx
 from typing import Optional
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone, timedelta
@@ -66,26 +67,55 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USERNAME = os.getenv("SMTP_USERNAME")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
-# Verificación rápida al iniciar para depuración
-if not SMTP_USERNAME or not SMTP_PASSWORD:
-    print("\n⚠️  ADVERTENCIA: No se detectaron credenciales SMTP en el archivo .env")
-    print("   El envío de correos no funcionará hasta que reinicies el servidor o corrijas el archivo.\n")
+# Configuración de Resend (Alternativa robusta a Gmail)
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
-def enviar_correo_respuesta(email_destino: str, nombre: str):
-    """Envía un correo de confirmación en segundo plano."""
+# Verificación rápida al iniciar para depuración
+if not RESEND_API_KEY and (not SMTP_USERNAME or not SMTP_PASSWORD):
+    print("\n⚠️  ADVERTENCIA: No se detectaron credenciales de correo (ni Resend ni SMTP).")
+
+def enviar_notificacion_admin(nombre: str, email_visitante: str, mensaje: str):
+    """Envía una notificación al administrador con el nuevo mensaje."""
+    email_destino = SMTP_USERNAME # Enviamos el correo al dueño del sitio
+    
+    # Opción 1: Usar Resend (Recomendado: No se bloquea en la nube)
+    if RESEND_API_KEY and email_destino:
+        print(f"📧 Intentando enviar con Resend API a {email_destino}...")
+        try:
+            # Nota: Sin dominio propio verificado, Resend solo permite enviar correos
+            # a la dirección con la que te registraste.
+            payload = {
+                "from": "Portafolio <onboarding@resend.dev>",
+                "to": [email_destino],
+                "subject": f"Nuevo mensaje de {nombre}",
+                "html": f"<p>Has recibido un nuevo mensaje de contacto:</p><p><strong>Nombre:</strong> {nombre}</p><p><strong>Email:</strong> {email_visitante}</p><p><strong>Mensaje:</strong><br>{mensaje}</p>"
+            }
+            headers = {
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json"
+            }
+            with httpx.Client(timeout=10.0) as client:
+                response = client.post("https://api.resend.com/emails", json=payload, headers=headers)
+                response.raise_for_status()
+                print(f"✅ Correo enviado con Resend. ID: {response.json().get('id')}")
+            return # Éxito, terminamos aquí
+        except Exception as e:
+            print(f"⚠️ Error con Resend: {e}. Intentando fallback a SMTP...")
+
+    # Opción 2: Fallback a SMTP (Gmail)
     print(f"📧 Iniciando intento de envío de correo a {email_destino}...")
     print(f"🔌 Puerto SMTP en uso: {SMTP_PORT}")
-    if not SMTP_USERNAME or not SMTP_PASSWORD:
+    if not email_destino or not SMTP_PASSWORD:
         print("⚠️ Credenciales SMTP no configuradas. No se envió el correo.")
         return
 
     try:
         msg = MIMEMultipart()
-        msg['From'] = SMTP_USERNAME
+        msg['From'] = email_destino
         msg['To'] = email_destino
-        msg['Subject'] = "Gracias por contactarme"
+        msg['Subject'] = f"Nuevo mensaje de {nombre}"
 
-        cuerpo = f"Hola {nombre},\n\nGracias por visitar mi portafolio. He recibido tu mensaje correctamente y te responderé a la brevedad.\n\nSaludos."
+        cuerpo = f"Has recibido un nuevo mensaje de contacto:\n\nNombre: {nombre}\nEmail: {email_visitante}\nMensaje:\n{mensaje}"
         msg.attach(MIMEText(cuerpo, 'plain'))
 
         print(f"   Conectando al servidor SMTP {SMTP_SERVER}:{SMTP_PORT}...")
@@ -99,7 +129,7 @@ def enviar_correo_respuesta(email_destino: str, nombre: str):
             server.ehlo()
             
         print("   Iniciando sesión...")
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+        server.login(email_destino, SMTP_PASSWORD)
         print("   Enviando mensaje...")
         server.send_message(msg)
         server.quit()
@@ -209,7 +239,7 @@ def recibir_contacto(request: Request, contacto: ContactoCreate, background_task
     session.refresh(contacto_db)
     
     # Enviar correo en segundo plano (no bloquea la respuesta al usuario)
-    background_tasks.add_task(enviar_correo_respuesta, contacto.email, contacto.nombre)
+    background_tasks.add_task(enviar_notificacion_admin, contacto.nombre, contacto.email, contacto.mensaje)
     
     print(f"Guardado en DB: {contacto_db}")
     return contacto_db
