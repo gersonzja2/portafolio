@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'https://portafolio-backend-6efq.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');

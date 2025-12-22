@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000'; // Cambiar por tu URL de Render al desplegar
+const API_URL = 'https://portafolio-backend-6efq.onrender.com'; // Cambiar por tu URL de Render al desplegar
 
 document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.querySelector('.formulario-contacto');
