@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Portafolio</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Volver al Portafolio</a></li>
+                <li><a href="#" id="btn-logout" style="display: none;">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección de Login -->
+        <section id="login-section">
+            <h1>Iniciar Sesión</h1>
+            <form id="login-form" class="formulario-contacto">
+                <input type="text" id="username" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+                <p id="error-login" style="color: red; display: none; margin-top: 10px;"></p>
+            </form>
+        </section>
+
+        <!-- Sección del Dashboard (Mensajes) -->
+        <section id="dashboard-section" style="display: none;">
+            <h1>Mensajes Recibidos</h1>
+            <div style="overflow-x: auto;">
+                <table id="tabla-mensajes">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Mensaje</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se insertarán los mensajes con JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

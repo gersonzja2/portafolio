@@ -5,3 +5,6 @@ python-dotenv
 email-validator
 pytest
 httpx
+python-jose[cryptography]
+python-multipart
+slowapi

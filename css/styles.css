@@ -186,3 +186,27 @@ footer {
     clip: rect(0, 0, 0, 0);
     border: 0;
 }
+
+/* Estilos para la tabla de administración */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--white);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}

@@ -2,7 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine, select
 from sqlmodel.pool import StaticPool
-from main import app, get_session, Contacto
+from main import app, get_session, Contacto, get_current_user, limiter
 
 # 1. Configuración de Base de Datos de Prueba (En memoria)
 # Usamos StaticPool para que la DB en memoria funcione con múltiples hilos si es necesario
@@ -11,6 +11,9 @@ engine_test = create_engine(
     connect_args={"check_same_thread": False}, 
     poolclass=StaticPool
 )
+
+# Desactivar el Rate Limiter durante las pruebas para evitar falsos positivos
+limiter.enabled = False
 
 # 2. Fixture: Prepara la base de datos antes de cada test y la limpia después
 @pytest.fixture(name="session")
@@ -27,8 +30,13 @@ def client_fixture(session: Session):
     def get_session_override():
         return session
 
+    # Override auth: Simulamos que siempre hay un usuario logueado ("admin")
+    def get_current_user_override():
+        return "admin"
+
     # Sobrescribimos la dependencia
     app.dependency_overrides[get_session] = get_session_override
+    app.dependency_overrides[get_current_user] = get_current_user_override
     
     client = TestClient(app)
     yield client
