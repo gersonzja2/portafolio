@@ -65,6 +65,7 @@ if not SMTP_USERNAME or not SMTP_PASSWORD:
 def enviar_correo_respuesta(email_destino: str, nombre: str):
     """Envía un correo de confirmación en segundo plano."""
     print(f"📧 Iniciando intento de envío de correo a {email_destino}...")
+    print(f"🔌 Puerto SMTP en uso: {SMTP_PORT}")
     if not SMTP_USERNAME or not SMTP_PASSWORD:
         print("⚠️ Credenciales SMTP no configuradas. No se envió el correo.")
         return
