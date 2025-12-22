@@ -89,9 +89,9 @@ def enviar_correo_respuesta(email_destino: str, nombre: str):
         msg.attach(MIMEText(cuerpo, 'plain'))
 
         if SMTP_PORT == 465:
-            server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
+            server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, timeout=60)
         else:
-            server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+            server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=60)
             server.starttls()
             
         server.login(SMTP_USERNAME, SMTP_PASSWORD)
