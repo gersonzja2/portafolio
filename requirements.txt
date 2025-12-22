@@ -3,3 +3,5 @@ uvicorn
 sqlmodel
 python-dotenv
 email-validator
+pytest
+httpx
