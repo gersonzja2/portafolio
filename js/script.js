@@ -1,19 +1,12 @@
 const API_URL = 'https://portafolio-backend-6efq.onrender.com'; // Cambiar por tu URL de Render al desplegar
 
-alert("¡Script cargado! Si ves esto, el archivo JS está funcionando.");
-
-// 1. Log global para confirmar que el archivo JS se cargó (Evitar problemas de caché)
-console.log("✅ script.js cargado correctamente. API:", API_URL);
-
 document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.querySelector('.formulario-contacto');
     const estadoMensaje = document.getElementById('estado-mensaje');
 
     if (formulario) {
-        console.log("✅ Formulario encontrado. Listener activado.");
         formulario.addEventListener('submit', async (event) => {
             event.preventDefault(); // Evitar que la página se recargue
-            console.log("✅ Botón enviar presionado.");
 
             // 1. Mostrar estado de "Enviando..." y bloquear botón
             const botonSubmit = formulario.querySelector('button[type="submit"]');
@@ -32,9 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 mensaje: document.getElementById('mensaje').value
             };
 
-            console.log("🚀 Iniciando envío a:", `${API_URL}/api/contacto`);
-            console.log("📦 Datos capturados:", datos);
-
             try {
                 // 3. Enviar los datos al backend (API)
                 // Nota: Asegúrate de que tu servidor (uvicorn) esté corriendo en el puerto 8000
@@ -45,8 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify(datos)
                 });
-
-                console.log("📡 Respuesta del servidor (Status):", respuesta.status);
 
                 // 4. Manejar la respuesta
                 if (respuesta.ok) {
@@ -65,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     estadoMensaje.textContent = 'Error: ' + mensajeError;
                 }
             } catch (error) {
-                console.error('❌ Error de conexión (Catch):', error);
+                console.error('Error de conexión:', error);
                 estadoMensaje.style.color = 'red';
                 estadoMensaje.textContent = 'Error de conexión. Asegúrate de que el servidor esté encendido.';
             } finally {
