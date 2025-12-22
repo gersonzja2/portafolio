@@ -1,4 +1,5 @@
 import os
+import socket
 from typing import Optional
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone, timedelta
@@ -18,6 +19,14 @@ from slowapi.errors import RateLimitExceeded
 
 # Cargar variables de entorno desde el archivo .env al inicio
 load_dotenv()
+
+# Parche para forzar IPv4 (Solución para [Errno 101] Network is unreachable)
+# Render y otros servicios a veces intentan usar IPv6 por defecto y fallan con Gmail.
+old_getaddrinfo = socket.getaddrinfo
+def new_getaddrinfo(*args, **kwargs):
+    responses = old_getaddrinfo(*args, **kwargs)
+    return [response for response in responses if response[0] == socket.AF_INET]
+socket.getaddrinfo = new_getaddrinfo
 
 # 1. Definir el modelo de la base de datos con SQLModel
 # Concepto: DTOs (Data Transfer Objects). Creamos una clase base para los campos comunes.
