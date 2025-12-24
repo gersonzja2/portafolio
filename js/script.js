@@ -1,8 +1,11 @@
 const API_URL = 'https://portafolio-backend-6efq.onrender.com'; // Cambiar por tu URL de Render al desplegar
+const GITHUB_USERNAME = 'gersonzja2'; // TU USUARIO DE GITHUB
 
 document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.querySelector('.formulario-contacto');
     const estadoMensaje = document.getElementById('estado-mensaje');
+
+    cargarRepositorios();
 
     if (formulario) {
         formulario.addEventListener('submit', async (event) => {
@@ -71,3 +74,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+async function cargarRepositorios() {
+    const contenedor = document.getElementById('contenedor-proyectos');
+    if (!contenedor) return;
+
+    try {
+        // Fetch a la API de GitHub: ordenados por actualización, máximo 6 repositorios
+        const respuesta = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`);
+        
+        if (!respuesta.ok) throw new Error('Error al obtener repositorios');
+        
+        const repos = await respuesta.json();
+        contenedor.innerHTML = ''; // Limpiar mensaje de carga
+
+        repos.forEach(repo => {
+            const div = document.createElement('div');
+            div.classList.add('proyecto'); // Reutilizamos tu clase CSS existente
+            div.innerHTML = `
+                <h3>${repo.name}</h3>
+                <p>${repo.description ? repo.description : 'Sin descripción disponible.'}</p>
+                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:10px; font-weight:bold;">Ver en GitHub</a>
+            `;
+            contenedor.appendChild(div);
+        });
+    } catch (error) {
+        console.error('Error cargando GitHub:', error);
+        contenedor.innerHTML = '<p>No se pudieron cargar los proyectos en este momento.</p>';
+    }
+}
