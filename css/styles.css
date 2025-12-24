@@ -191,6 +191,25 @@ h1, h2, h3 {
     text-align: center;
 }
 
+/* Botón de WhatsApp */
+.btn-whatsapp {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 15px 0 25px 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    transform: translateY(-3px);
+}
+
 .formulario-contacto {
     max-width: 500px;
     margin: 20px auto 0;
