@@ -17,12 +17,13 @@
                 <li><a href="#proyectos">Proyectos</a></li>
                 <li><a href="#habilidades">Habilidades</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><button id="btn-tema" aria-label="Cambiar tema">🌙</button></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="sobre-mi">
+        <section id="sobre-mi" class="reveal">
             <h1>Hola, soy Gerson Zambrana</h1>
             <h2>Desarrollador de Software</h2>
             <img src="assets/images/perfil.png" alt="Foto de perfil de Gerson Zambrana">
@@ -30,15 +31,30 @@
             <a href="assets/cv.pdf" class="btn" download>Descargar Currículum</a>
         </section>
 
-        <section id="proyectos">
+        <section id="proyectos" class="reveal">
             <h2>Mis Proyectos</h2>
             <!-- Contenedor dinámico para repositorios de GitHub -->
             <div id="contenedor-proyectos">
-                <p>Cargando proyectos...</p>
+                <!-- Skeleton Loading: Se muestra mientras carga JS -->
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text"></div>
+                </div>
             </div>
         </section>
 
-        <section id="habilidades">
+        <section id="habilidades" class="reveal">
             <h2>Habilidades</h2>
             <ul class="lista-habilidades">
                 <li>HTML5</li>
@@ -49,7 +65,7 @@
             </ul>
         </section>
 
-        <section id="contacto">
+        <section id="contacto" class="reveal">
             <h2>Contacto</h2>
             <p>¿Te interesa trabajar conmigo? Envíame un mensaje.</p>
             <form class="formulario-contacto">

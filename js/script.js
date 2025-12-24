@@ -5,6 +5,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.querySelector('.formulario-contacto');
     const estadoMensaje = document.getElementById('estado-mensaje');
 
+    // --- Lógica del Modo Oscuro ---
+    const btnTema = document.getElementById('btn-tema');
+    const body = document.body;
+
+    // 1. Cargar preferencia guardada
+    if (localStorage.getItem('tema') === 'oscuro') {
+        body.classList.add('dark-mode');
+        if (btnTema) btnTema.textContent = '☀️';
+    }
+
+    // 2. Alternar tema al hacer clic
+    if (btnTema) {
+        btnTema.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const esOscuro = body.classList.contains('dark-mode');
+            
+            // Guardar en localStorage y cambiar icono
+            localStorage.setItem('tema', esOscuro ? 'oscuro' : 'claro');
+            btnTema.textContent = esOscuro ? '☀️' : '🌙';
+        });
+    }
+
+    // --- Animación Scroll Reveal ---
+    const observerOptions = {
+        threshold: 0.15 // Se activa cuando el 15% del elemento es visible
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Dejar de observar para que no se repita
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(section => {
+        observer.observe(section);
+    });
+
     cargarRepositorios();
 
     if (formulario) {
