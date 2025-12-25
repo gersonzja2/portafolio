@@ -200,7 +200,7 @@ h1, h2, h3 {
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    margin: 15px 0 25px 0;
+    margin: 15px 10px 25px 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -208,6 +208,26 @@ h1, h2, h3 {
 .btn-whatsapp:hover {
     background-color: #128C7E;
     transform: translateY(-3px);
+}
+
+/* Botón de Instagram */
+.btn-instagram {
+    display: inline-block;
+    background: #d6249f;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 15px 10px 25px 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-instagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .formulario-contacto {
