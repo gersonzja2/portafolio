@@ -186,6 +186,38 @@ h1, h2, h3 {
     color: var(--accent-color);
 }
 
+/* Estilos específicos por tecnología (Brand Colors) */
+.lista-habilidades li.html:hover {
+    color: #e34f26;
+    border-color: #e34f26;
+}
+
+.lista-habilidades li.css:hover {
+    color: #264de4;
+    border-color: #264de4;
+}
+
+.lista-habilidades li.js:hover {
+    color: #f7df1e;
+    border-color: #f7df1e;
+    text-shadow: 0 0 1px #888; /* Sombra suave para mejorar legibilidad del amarillo */
+}
+
+.lista-habilidades li.python:hover {
+    color: #3776ab;
+    border-color: #3776ab;
+}
+
+.lista-habilidades li.java:hover {
+    color: #007396;
+    border-color: #007396;
+}
+
+.lista-habilidades li.c:hover {
+    color: #00599C;
+    border-color: #00599C;
+}
+
 /* Sección Contacto */
 #contacto {
     text-align: center;
